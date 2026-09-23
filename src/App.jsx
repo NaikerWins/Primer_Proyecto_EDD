@@ -11,6 +11,7 @@ import { Cola } from "./structures/Cola.js";
 import { EventoService } from "./services/EventoService.js";
 import { crearReporte } from "./domain/Reporte.js";
 import * as Asociaciones from "./domain/Asociaciones.js";
+import { serializarEscenario, cargarDesdeJSON } from "./persistence/Persistencia.js";
 
 
 
@@ -19,6 +20,8 @@ window.SismoLab = {
   calcularPrioridad, crearEvento, claveDeEvento, Asociaciones,
   crearZona, contiene, enZonaPoblada,
   crearEstacion, crearEscenario,
+  Persistencia: { serializarEscenario, cargarDesdeJSON },
+
   ArbolBST, ArbolAVL,
   Pila, Cola,
   EventoService,
