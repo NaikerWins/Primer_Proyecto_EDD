@@ -7,6 +7,12 @@ import { enZonaPoblada } from "../domain/Zona.js";
 import { crearAccion } from "./Accion.js";
 import { buscarCandidatos, elegirReferencia, referenciadosPor } from "../domain/Asociaciones.js";
 import { serializarEscenario, cargarDesdeJSON } from "../persistence/Persistencia.js";
+import {
+  consultarPrimerosKPendientes,
+  consultarEventosPorRangoMagnitud,
+  consultarPorFechaYProfundidad,
+  consultarAccesoCostoso,
+} from "./Consultas.js";
 
 export class EventoService {
     exportarEstado() {
@@ -646,5 +652,52 @@ recuperarEquilibrio() {
     balanceado,
   };
 }
+// En EventoService.js
+cambiarLimiteL(nuevoL) {
+  if (!Number.isInteger(nuevoL) || nuevoL < 0) {
+    return { exito: false, mensaje: "L debe ser un entero no negativo" };
+  }
+  const anterior = this.escenario.parametros.L;
+  this.escenario.parametros.L = nuevoL;
+
+  const self = this;
+  this._registrarAccion(crearAccion(
+    "CAMBIAR_L",
+    `Cambiar L de ${anterior} a ${nuevoL}`,
+    function () { self.escenario.parametros.L = anterior; }
+  ));
+
+  return { exito: true, mensaje: `L actualizado a ${nuevoL}` };
 }
+// En EventoService.js
+
+primerosKPendientes(k) {
+  if (!Number.isInteger(k) || k <= 0) {
+    return { exito: false, mensaje: "k debe ser un entero positivo" };
+  }
+  const r = consultarPrimerosKPendientes(this.avl, k);
+  return { exito: true, ...r };
+}
+
+eventosPorRangoMagnitud(mMin, mMax) {
+  if (mMin > mMax) return { exito: false, mensaje: "Rango inválido" };
+  const r = consultarEventosPorRangoMagnitud(this.avl, mMin, mMax);
+  return { exito: true, ...r };
+}
+
+eventosPorFechaYProfundidad(fIni, fFin, hMax) {
+  if (fIni.getTime() > fFin.getTime()) return { exito: false, mensaje: "Rango de fechas inválido" };
+  const r = consultarPorFechaYProfundidad(this.avl, fIni, fFin, hMax);
+  return { exito: true, ...r };
+}
+
+eventosConAccesoCostoso() {
+  const L = this.escenario.parametros.L;
+  const r = consultarAccesoCostoso(this.avl, L);
+  return { exito: true, ...r };
+}
+}
+
+
+
 

@@ -12,14 +12,16 @@ import { EventoService } from "./services/EventoService.js";
 import { crearReporte } from "./domain/Reporte.js";
 import * as Asociaciones from "./domain/Asociaciones.js";
 import { serializarEscenario, cargarDesdeJSON } from "./persistence/Persistencia.js";
+import * as Consultas from "./services/Consultas.js";
+
 
 
 
 window.SismoLab = {
   crearClave, compararClaves, formatearClave, crearReporte,
   calcularPrioridad, crearEvento, claveDeEvento, Asociaciones,
-  crearZona, contiene, enZonaPoblada,
-  crearEstacion, crearEscenario,
+  crearZona, contiene, enZonaPoblada, Consultas,
+  crearEstacion, crearEscenario, 
   Persistencia: { serializarEscenario, cargarDesdeJSON },
 
   ArbolBST, ArbolAVL,
