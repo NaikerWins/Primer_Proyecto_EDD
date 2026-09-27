@@ -8,6 +8,8 @@ import { ArbolBST } from "./structures/ArbolBST.js";
 import { ArbolAVL } from "./structures/ArbolAVL.js";
 import { Pila } from "./structures/Pila.js";
 import { Cola } from "./structures/Cola.js";
+import * as Versiones from "./persistence/Versiones.js";
+
 import { EventoService } from "./services/EventoService.js";
 import { crearReporte } from "./domain/Reporte.js";
 import * as Asociaciones from "./domain/Asociaciones.js";
@@ -20,7 +22,7 @@ import * as Consultas from "./services/Consultas.js";
 window.SismoLab = {
   crearClave, compararClaves, formatearClave, crearReporte,
   calcularPrioridad, crearEvento, claveDeEvento, Asociaciones,
-  crearZona, contiene, enZonaPoblada, Consultas,
+  crearZona, contiene, enZonaPoblada, Consultas, Versiones,
   crearEstacion, crearEscenario, 
   Persistencia: { serializarEscenario, cargarDesdeJSON },
 
