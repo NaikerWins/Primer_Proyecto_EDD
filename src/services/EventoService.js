@@ -9,6 +9,8 @@ import { enZonaPoblada } from "../domain/Zona.js";
 import { crearAccion } from "./Accion.js";
 import { buscarCandidatos, elegirReferencia, referenciadosPor } from "../domain/Asociaciones.js";
 import { elegirRamaAArchivar, extraerEventosSubarbol } from "./Archivo.js";
+import { auditarAVL } from "./Auditoria.js";
+
 import {
   consultarPrimerosKPendientes,
   consultarEventosPorRangoMagnitud,
@@ -891,4 +893,119 @@ export class EventoService {
 
     return { exito: true, mensaje: `Reloj avanzado ${horas}h`, reloj: nuevo };
   }
+  // --------------------------------------------------
+// AUDITORÍA
+// --------------------------------------------------
+verificarEstructura() {
+  const reporte = auditarAVL(this.avl, this.escenario.modo);
+  return {
+    exito: true,
+    modo: this.escenario.modo,
+    consistente: reporte.consistente,
+    problemas: reporte.problemas,
+    desbalancesEsperados: reporte.desbalancesEsperados,
+    conteos: reporte.conteos,
+  };
+}
+
+// --------------------------------------------------
+// INDICADORES
+// --------------------------------------------------
+indicadores() {
+  // 1) Recorridos
+  const inorden = this.avl.inorden().map(n => ({
+    id: n.getClave().id,
+    clave: { ...n.getClave() },
+  }));
+  const preorden = this.avl.preorden().map(n => n.getClave().id);
+  const posorden = this.avl.posorden().map(n => n.getClave().id);
+  const porNiveles = this.avl.porNiveles().map(n => n.getClave().id);
+
+  // 2) Conteo por prioridad entre activos
+  const porPrioridad = { 1: 0, 2: 0, 3: 0 };
+  let pendientes = 0;
+  let revisados = 0;
+  let prioridadAltaProfunda = 0;
+  const L = this.escenario.parametros.L;
+
+  // Recorrido por niveles para conocer profundidad de cada nodo
+  const cola = this.avl.getRaiz() ? [{ nodo: this.avl.getRaiz(), p: 0 }] : [];
+  while (cola.length > 0) {
+    const { nodo, p } = cola.shift();
+    const ev = nodo.getDato();
+    porPrioridad[ev.prioridad] = (porPrioridad[ev.prioridad] || 0) + 1;
+    if (ev.estadoAtencion === "pendiente") pendientes++;
+    else revisados++;
+    if (ev.prioridad === 3 && p > L) prioridadAltaProfunda++;
+    if (nodo.getHijoIzquierdo()) cola.push({ nodo: nodo.getHijoIzquierdo(), p: p + 1 });
+    if (nodo.getHijoDerecho()) cola.push({ nodo: nodo.getHijoDerecho(), p: p + 1 });
+  }
+
+  // 3) Árbol
+  const arbol = {
+    activos: this.avl.porNiveles().length,
+    altura: this.avl.altura(),
+    hojas: this.avl.contarHojas(),
+    balanceado: this.avl.estaBalanceado(),
+  };
+
+  // 4) Contadores del AVL
+  const contadores = { ...this.avl.contadores };
+
+  // 5) Métricas del servicio
+  const metricas = { ...this.metricas };
+
+  return {
+    arbol,
+    historicos: this.escenario.historicos.length,
+    idsRetirados: this.idsRetirados.size,
+    cola: this.colaReportes.tamano(),
+    pilaUndo: this.pilaUndo.tamano(),
+    porPrioridad,
+    pendientes,
+    revisados,
+    prioridadAltaProfunda,
+    L,
+    contadores,
+    metricas,
+    recorridos: { inorden, preorden, posorden, porNiveles },
+  };
+}
+
+// Versión resumida para la barra superior de la GUI.
+resumenRapido() {
+  return {
+    modo: this.escenario.modo,
+    activos: this.avl.porNiveles().length,
+    historicos: this.escenario.historicos.length,
+    retirados: this.idsRetirados.size,
+    cola: this.colaReportes.tamano(),
+    balanceado: this.avl.estaBalanceado(),
+    altura: this.avl.altura(),
+    pendientes: this.contarPendientes(),
+    prioridadAltaProfunda: this.contarAccesoCostoso(),
+    proximaUndo: this.verTopeUndo(),
+  };
+}
+
+contarPendientes() {
+  let n = 0;
+  for (const nodo of this.avl.porNiveles()) {
+    if (nodo.getDato().estadoAtencion === "pendiente") n++;
+  }
+  return n;
+}
+
+contarAccesoCostoso() {
+  const L = this.escenario.parametros.L;
+  let n = 0;
+  const cola = this.avl.getRaiz() ? [{ nodo: this.avl.getRaiz(), p: 0 }] : [];
+  while (cola.length > 0) {
+    const { nodo, p } = cola.shift();
+    if (nodo.getDato().prioridad === 3 && p > L) n++;
+    if (nodo.getHijoIzquierdo()) cola.push({ nodo: nodo.getHijoIzquierdo(), p: p + 1 });
+    if (nodo.getHijoDerecho()) cola.push({ nodo: nodo.getHijoDerecho(), p: p + 1 });
+  }
+  return n;
+}
 }
