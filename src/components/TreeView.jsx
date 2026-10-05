@@ -1,16 +1,6 @@
 // src/components/TreeView.jsx
 import { calcularLayout, etiquetaClave } from "./TreeLayout.js";
 
-/**
- * TreeView: dibuja un árbol (AVL o BST) en un SVG.
- *
- * Props:
- *   - arbol: instancia de ArbolAVL o ArbolBST
- *   - titulo: string, mostrado arriba
- *   - modo: "normal" | "estres" | null (solo afecta colores)
- *   - resaltarIds: Set de ids a resaltar (por ejemplo, resultado de una consulta)
- *   - etiquetasExtra: Map<id, string> con info adicional bajo el nodo
- */
 export default function TreeView({
   arbol,
   titulo = "Árbol",
@@ -45,8 +35,15 @@ export default function TreeView({
           {/* Nodos */}
           {layout.nodos.map(n => {
             const destacado = resaltarIds.has(n.id);
-            const desbalanceado = modo === "estres" && Math.abs(n.fb) > 1;
+            // Solo marcamos como desbalanceado si el nodo tiene factor de balance
+            // (es decir, si es AVL). En BST no aplica.
+            const desbalanceado = modo === "estres" && n.fb !== null && Math.abs(n.fb) > 1;
             const colorRelleno = colorPorPrioridad(n.clave.prioridad);
+
+            // Texto de altura/fb: si es BST mostramos solo "BST"
+            const textoAltura = n.altura !== null
+              ? `h=${n.altura} fb=${n.fb}`
+              : "(BST)";
 
             return (
               <g key={n.id}>
@@ -63,7 +60,6 @@ export default function TreeView({
                   }
                   strokeWidth={desbalanceado || destacado ? 3 : 1.5}
                 />
-                {/* Etiqueta de la clave */}
                 <text
                   x={n.x}
                   y={n.y + 4}
@@ -74,7 +70,6 @@ export default function TreeView({
                 >
                   {etiquetaClave(n.clave)}
                 </text>
-                {/* Altura y factor de balance */}
                 <text
                   x={n.x}
                   y={n.y + layout.radio + 12}
@@ -83,9 +78,8 @@ export default function TreeView({
                   fill="#555"
                   fontFamily="monospace"
                 >
-                  h={n.altura} fb={n.fb}
+                  {textoAltura}
                 </text>
-                {/* Etiqueta extra (opcional) */}
                 {etiquetasExtra.has(n.id) && (
                   <text
                     x={n.x}
@@ -108,7 +102,7 @@ export default function TreeView({
 }
 
 function colorPorPrioridad(p) {
-  if (p === 3) return "#ffd1d1"; // rojo suave
-  if (p === 2) return "#ffe8b0"; // amarillo suave
-  return "#cfe8cf";              // verde suave
+  if (p === 3) return "#ffd1d1";
+  if (p === 2) return "#ffe8b0";
+  return "#cfe8cf";
 }

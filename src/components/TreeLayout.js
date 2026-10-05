@@ -2,13 +2,8 @@
 
 /**
  * Calcula posiciones (x, y) para cada nodo de un árbol.
- * Estrategia: x = índice en inorden (de izquierda a derecha),
- *             y = profundidad en el árbol.
- *
- * Devuelve:
- *   - nodos: [{ id, clave, x, y, altura, fb, esRaiz, padreId }]
- *   - aristas: [{ desde: {x,y}, hacia: {x,y} }]
- *   - ancho, alto (para dimensionar el SVG)
+ * Funciona tanto con ArbolAVL (nodos con getAltura/getFactorBalance)
+ * como con ArbolBST (nodos sin esos métodos).
  */
 export function calcularLayout(arbol, opciones = {}) {
   const {
@@ -39,12 +34,17 @@ export function calcularLayout(arbol, opciones = {}) {
     const y = margenY + profundidad * gapY;
     if (profundidad > profundidadMax) profundidadMax = profundidad;
 
+    // Leemos altura y fb solo si el nodo los tiene (nodos AVL).
+    // Para BST mostramos "—" (guion) porque no aplica.
+    const tieneAltura = typeof nodo.getAltura === "function";
+    const tieneFb = typeof nodo.getFactorBalance === "function";
+
     nodos.push({
       id,
       clave: { ...nodo.getClave() },
       x, y,
-      altura: nodo.getAltura(),
-      fb: nodo.getFactorBalance(),
+      altura: tieneAltura ? nodo.getAltura() : null,
+      fb: tieneFb ? nodo.getFactorBalance() : null,
       esRaiz: padre === null,
       padreId: padre ? padre.getClave().id : null,
     });
@@ -66,7 +66,6 @@ export function calcularLayout(arbol, opciones = {}) {
   return { nodos, aristas, ancho, alto, radio };
 }
 
-// Formatea la clave para mostrar dentro del nodo (compacta)
 export function etiquetaClave(clave) {
   return `${clave.prioridad}·${clave.magnitud.toFixed(1)}·${clave.id}`;
 }
