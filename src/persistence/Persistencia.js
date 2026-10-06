@@ -1,4 +1,3 @@
-// src/persistence/Persistencia.js
 import * as EJ from "./EsquemaJSON.js";
 import { cargarPorInserciones } from "./CargarInserciones.js";
 import { cargarPorTopologia } from "./CargarTopologia.js";

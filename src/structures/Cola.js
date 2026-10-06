@@ -1,4 +1,3 @@
-// src/structures/Cola.js
 
 // Nodo interno para la lista enlazada. No lo exponemos.
 class NodoCola {

@@ -1,4 +1,3 @@
-// src/components/PanelCola.jsx
 import { useState } from "react";
 import { crearReporte } from "../domain/Reporte.js";
 

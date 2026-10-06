@@ -1,4 +1,4 @@
-// src/domain/Clave.js
+
 // Una clave K = (prioridad, magnitud, id).
 // La comparación es lexicográfica: se usa el primer componente que difiera.
 

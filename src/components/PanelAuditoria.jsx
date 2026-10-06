@@ -1,4 +1,3 @@
-// src/components/PanelAuditoria.jsx
 import { useState } from "react";
 
 export default function PanelAuditoria({ svc, refrescar }) {

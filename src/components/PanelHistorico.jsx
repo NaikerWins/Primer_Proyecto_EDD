@@ -1,4 +1,3 @@
-// src/components/PanelHistorico.jsx
 export default function PanelHistorico({ svc }) {
   const historicos = svc.escenario.historicos;
   const retirados = Array.from(svc.idsRetirados);

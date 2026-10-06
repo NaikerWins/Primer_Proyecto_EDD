@@ -1,4 +1,3 @@
-// src/structures/NodoAVL.js
 import { Nodo } from "./Nodo.js";
 
 export class NodoAVL extends Nodo {
@@ -11,8 +10,7 @@ export class NodoAVL extends Nodo {
   setAltura(h) { this.altura = h; }
 
   // Factor de balance: alturaIzq - alturaDer.
-  // Usamos -1 para "sin hijo" para que las cuentas cuadren
-  // con la convención del PDF (altura de vacío = -1).
+  // Usamos -1 para "sin hijo" para que las cuentas cuadren (altura de vacío = -1).
   getFactorBalance() {
     const hIzq = this.hijoIzquierdo ? this.hijoIzquierdo.altura : -1;
     const hDer = this.hijoDerecho ? this.hijoDerecho.altura : -1;

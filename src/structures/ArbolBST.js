@@ -1,4 +1,3 @@
-// src/structures/ArbolBST.js
 import { Nodo } from "./Nodo.js";
 import { compararClaves, formatearClave } from "../domain/Clave.js";
 

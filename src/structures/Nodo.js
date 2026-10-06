@@ -1,4 +1,3 @@
-// src/structures/Nodo.js
 
 export class Nodo {
   constructor(clave, dato = null) {

@@ -1,4 +1,3 @@
-// src/components/MapaGeografico.jsx
 import { useState } from "react";
 
 const TAMANO = 600;

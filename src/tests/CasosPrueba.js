@@ -1,4 +1,3 @@
-// src/tests/CasosPrueba.js
 import { crearEscenario } from "../domain/Escenario.js";
 import { crearZona } from "../domain/Zona.js";
 import { crearEstacion } from "../domain/Estacion.js";

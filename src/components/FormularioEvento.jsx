@@ -1,4 +1,3 @@
-// src/components/FormularioEvento.jsx
 import { useState } from "react";
 
 const VACIO = {

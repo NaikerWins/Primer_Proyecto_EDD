@@ -1,4 +1,3 @@
-// src/services/Archivo.js
 
 // Devuelve la antigüedad en horas entre el reloj y la fecha del evento.
 function antiguedadHoras(evento, reloj) {

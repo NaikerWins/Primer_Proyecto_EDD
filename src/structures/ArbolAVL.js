@@ -1,4 +1,3 @@
-// src/structures/ArbolAVL.js
 import { NodoAVL } from "./NodoAVL.js";
 import { compararClaves, formatearClave } from "../domain/Clave.js";
 

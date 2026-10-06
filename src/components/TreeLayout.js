@@ -1,5 +1,3 @@
-// src/components/TreeLayout.js
-
 /**
  * Calcula posiciones (x, y) para cada nodo de un árbol.
  * Funciona tanto con ArbolAVL (nodos con getAltura/getFactorBalance)

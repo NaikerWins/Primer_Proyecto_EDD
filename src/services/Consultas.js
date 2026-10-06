@@ -1,4 +1,3 @@
-// src/services/Consultas.js
 
 // Recorrido inverso con corte al llegar a k.
 function _primerosKPendientes(nodo, k, resultado, contador) {

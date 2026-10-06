@@ -1,4 +1,3 @@
-// src/services/Auditoria.js
 import { compararClaves, formatearClave } from "../domain/Clave.js";
 
 // Recorre el AVL en inorden y reporta:

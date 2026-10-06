@@ -1,4 +1,3 @@
-// src/domain/Asociaciones.js
 
 // Distancia euclídea entre epicentros, en km.
 export function distanciaEuclidea(a, b) {

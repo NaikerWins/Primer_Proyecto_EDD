@@ -1,4 +1,3 @@
-// src/components/PanelVersiones.jsx
 import { useState } from "react";
 import { leerVersion } from "../persistence/Versiones.js";
 

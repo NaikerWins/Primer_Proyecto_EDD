@@ -1,4 +1,3 @@
-// src/components/PanelIndicadores.jsx
 export default function PanelIndicadores({ svc }) {
   const ind = svc.indicadores();
   const { arbol, contadores, metricas, porPrioridad, recorridos } = ind;

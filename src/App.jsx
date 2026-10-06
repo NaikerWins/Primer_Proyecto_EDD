@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useMemo, useState } from "react";
 
 // Dominio
@@ -21,7 +20,6 @@ import PanelPersistencia from "./components/PanelPersistencia.jsx";
 import PanelAuditoria from "./components/PanelAuditoria.jsx";
 import PanelCasos from "./components/PanelCasos.jsx";
 
-// Exponer para consola (útil para sustentación)
 import * as Clave from "./domain/Clave.js";
 import * as Evento from "./domain/Evento.js";
 import * as Zona from "./domain/Zona.js";
@@ -38,9 +36,7 @@ window.SismoLab = {
   crearEscenario, crearZona, crearEstacion,
 };
 
-// --------------------------------------------------
-// Escenario demo con zonas y estaciones
-// --------------------------------------------------
+
 function crearEscenarioDemo() {
   const esc = crearEscenario();
   esc.zonas.push(crearZona("Z1", 0, 0, 500, 500, true));
@@ -54,17 +50,12 @@ function crearEscenarioDemo() {
 
 export default function App() {
   // El servicio se crea UNA sola vez y se guarda en un ref (useMemo).
-  // No usamos useState porque es un objeto mutable que manejamos imperativamente.
   const svc = useMemo(() => {
     const s = new EventoService(crearEscenarioDemo());
 
     // Eventos demo para que la vista no arranque vacía
     const demo = [
-      { id: 10, magnitud: 6.5, profundidad: 10, epicentro: { x: 100, y: 100 }, fechaHora: "2026-01-01T10:00:00Z" },
-      { id: 20, magnitud: 5.0, profundidad: 20, epicentro: { x: 150, y: 120 }, fechaHora: "2026-01-01T11:00:00Z" },
-      { id: 30, magnitud: 4.5, profundidad: 25, epicentro: { x: 200, y: 100 }, fechaHora: "2026-01-01T12:00:00Z" },
-      { id: 40, magnitud: 3.0, profundidad: 50, epicentro: { x: 300, y: 300 }, fechaHora: "2026-01-01T13:00:00Z" },
-      { id: 50, magnitud: 7.2, profundidad: 15, epicentro: { x: 250, y: 250 }, fechaHora: "2026-01-01T14:00:00Z" },
+  
     ];
     for (const d of demo) {
       s.crearEvento({

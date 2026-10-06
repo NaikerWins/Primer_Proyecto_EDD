@@ -1,4 +1,3 @@
-// src/domain/Escenario.js
 
 export function crearEscenario() {
   return {

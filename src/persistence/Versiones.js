@@ -1,4 +1,3 @@
-// src/persistence/Versiones.js
 
 const CLAVE_LS = "sismolab.versiones";
 

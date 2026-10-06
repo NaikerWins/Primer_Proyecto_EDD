@@ -1,4 +1,3 @@
-// src/components/TreeView.jsx
 import { calcularLayout, etiquetaClave } from "./TreeLayout.js";
 
 export default function TreeView({

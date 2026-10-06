@@ -1,4 +1,3 @@
-// src/domain/Evento.js
 import { enZonaPoblada } from "./Zona.js";
 import { crearClave } from "./Clave.js";
 

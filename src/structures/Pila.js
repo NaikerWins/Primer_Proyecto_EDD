@@ -1,8 +1,7 @@
-// src/structures/Pila.js
+
 
 /**
  * Pila LIFO sobre array nativo.
- * Se usa para deshacer acciones (sección 13 del PDF).
  */
 export class Pila {
   constructor() {

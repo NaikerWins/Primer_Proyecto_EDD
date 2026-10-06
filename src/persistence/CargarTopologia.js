@@ -1,4 +1,3 @@
-// src/persistence/CargarTopologia.js
 import { ArbolAVL } from "../structures/ArbolAVL.js";
 import { NodoAVL } from "../structures/NodoAVL.js";
 import { crearClave, compararClaves } from "../domain/Clave.js";

@@ -1,4 +1,4 @@
-// src/domain/Zona.js
+
 
 export function crearZona(id, x1, y1, x2, y2, poblada) {
   return { id, x1, y1, x2, y2, poblada };

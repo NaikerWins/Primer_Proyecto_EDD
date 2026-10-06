@@ -1,4 +1,3 @@
-// src/persistence/CargarInserciones.js
 import { ArbolAVL } from "../structures/ArbolAVL.js";
 import { ArbolBST } from "../structures/ArbolBST.js";
 import { crearClave } from "../domain/Clave.js";

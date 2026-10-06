@@ -1,4 +1,3 @@
-// src/components/PanelOperaciones.jsx
 import { useState } from "react";
 
 export default function PanelOperaciones({ svc, refrescar }) {

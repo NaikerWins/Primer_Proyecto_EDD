@@ -1,4 +1,3 @@
-// src/persistence/EsquemaJSON.js
 
 // Convierte un objeto Date a ISO 8601 con Z
 export function fechaAISO(fecha) {

@@ -1,4 +1,3 @@
-// src/services/EventoService.js
 
 import { ArbolAVL } from "../structures/ArbolAVL.js";
 import { Pila } from "../structures/Pila.js";

@@ -1,4 +1,3 @@
-// src/components/PanelPersistencia.jsx
 import { useRef, useState } from "react";
 
 export default function PanelPersistencia({ svc, refrescar }) {

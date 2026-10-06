@@ -1,4 +1,3 @@
-// src/components/PanelCasos.jsx
 import { useState } from "react";
 import {
   caso1_LimitesYEmpates,
